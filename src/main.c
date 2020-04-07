@@ -11,19 +11,83 @@ static int button_s = 0;
 static int button_i = 0;
 static int button_k = 0;
 
+static int accel = 10;
+
+static int ball_x = 30;
+static int ball_y = 30;
+static int ball_dx = 10;
+static int ball_dy = 10;
+static int ball_accel = 20;
+
+void isr0()
+{
+    if (button_w != 0 || button_s != 0)
+    {
+        erase_player1(y_player1);
+
+        y_player1 += button_w * accel;
+        y_player1 += button_s * accel;
+
+        draw_player1(y_player1);
+    }
+
+    if (button_i != 0 || button_k != 0)
+    {
+        erase_player2(y_player2);
+
+        y_player2 += button_i * accel;
+        y_player2 += button_k * accel;
+
+        draw_player2(y_player2);
+    }
+
+    // Controle para não apagar a linha central
+    if (ball_x > 501 && ball_x < 518)
+    {
+        erase_ball(502, ball_y);
+        erase_ball(517, ball_y);
+    } else {
+        erase_ball(ball_x, ball_y);
+    }
+
+    /* Calcula o eixo x da bola */
+    ball_x += ball_dx;
+
+    if (ball_x <= 30)
+    {
+        ball_x = 30;
+        ball_dx += ball_accel;
+    }
+
+    if (ball_x >= 1023 - 30)
+    {
+        ball_x = 1023 - 30;
+        ball_dx -= ball_accel;
+    }
+    
+    /* Calcula o eixo y da bola */
+    ball_y += ball_dy;
+
+    if (ball_y <= 0)
+    {
+        ball_y = 30;
+        ball_dy += ball_accel;
+    }
+
+    if (ball_y >= 758)
+    {
+        ball_y = 758;
+        ball_dy -= ball_accel;
+    }
+
+    draw_ball(ball_x, ball_y);
+}
+
 void isr1(void)
 {
     char keycode;
 
     keycode = inb(0x60);
-
-    //char c = keyboard_map[keycode];
-
-    /*if (keycode >= 0) {
-        draw_square(x, y, 10, 10, 0x665566);
-        x += 10;
-        draw_square(x, y, 10, 10, 0xFFFF00);
-    }*/
 
     if (keycode & 0x80)
     {
@@ -50,9 +114,10 @@ void isr1(void)
         if (keycode == 37)
         {
             button_k = 0;
-        }        
-        
-    } else {
+        }
+    }
+    else
+    {
         /* Precionou o W */
         if (keycode == 17)
         {
@@ -76,14 +141,11 @@ void isr1(void)
         {
             button_k = 1;
         }
-
     }
 }
 
 int main(void)
 {
-    long int i = 0;
-
     draw_board();
 
     draw_player1(y_player1);
@@ -91,31 +153,9 @@ int main(void)
 
     draw_ball(30, 80);
 
-    while (1) {
-        for (i = 0; i < 100000; i++);
-
-        if (button_w != 0 || button_s != 0)
-        {
-            erase_player1(y_player1);
-        
-            y_player1 += button_w;
-            y_player1 += button_s;
-
-            draw_player1(y_player1);
-        }
-
-        if (button_i != 0 || button_k != 0)
-        {
-            erase_player2(y_player2);
-        
-            y_player2 += button_i;
-            y_player2 += button_k;
-
-            draw_player2(y_player2);
-        }
-        
+    while (1)
+    {
     }
 
     return 0;
 }
-

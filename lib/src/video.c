@@ -30,7 +30,7 @@ void draw_player1(int y)
 
 void draw_player2(int y)
 {
-    draw_square(1000, y, 10, 100, 0xFFFFFF);
+    draw_square(1004, y, 10, 100, 0xFFFFFF);
 }
 
 void erase_player1(int y)
@@ -40,7 +40,12 @@ void erase_player1(int y)
 
 void erase_player2(int y)
 {
-    draw_square(1000, y, 10, 100, 0x000000);
+    draw_square(1004, y, 10, 100, 0x000000);
+}
+
+void erase_ball(int x, int y)
+{
+    draw_square(x, y, 10, 10, 0x000000);
 }
 
 void draw_square(int x, int y, int w, int h, int c)
