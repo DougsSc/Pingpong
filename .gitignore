@@ -1,0 +1,8 @@
+**/*.elf
+*.o
+**/*.o
+**/**/*.o
+iso/boot/*.elf
+*.img
+*.iso
+*.elf
