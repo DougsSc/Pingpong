@@ -35,9 +35,6 @@ void reiniciaJogo(void)
     ball_dx = 10;
     ball_dy = 10;
 
-    //usart_puts("Pontos: " + ((char) points_player1));
-    //usart_write(0x3f8, points_player1);
-
     exibePontuacao();
 }
 
@@ -49,7 +46,6 @@ void exibePontuacao(void)
 
     for (i = 0; i < points_player1; i++)
     {
-        usart_puts("Ponto 1");
         inicio_1 += 5;
         draw_square(inicio_1, 30, 2, 20, 0xFFFFFF);
     }
