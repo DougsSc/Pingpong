@@ -1,6 +1,7 @@
 PROJECT = pong
 
-SOURCES += src/main.c
+SOURCES += src/main.c \
+		lib/src/usart.c
 
 LIBPATH = lib
 include $(LIBPATH)/lib.mk
@@ -44,4 +45,3 @@ run: $(PROJECT).iso
 debug: kernel.elf
 	$(QEMU) -soundhw pcspk -serial mon:stdio -s -S -kernel $< &
 	gdb -iex "set auto-load safe-path .gdbinit" $<
-
