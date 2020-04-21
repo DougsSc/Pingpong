@@ -2,7 +2,10 @@
 #include <gfx/video.h>
 #include <sys/usart.h>
 
-//static int x = 0;
+#define SERIAL_PORT 0x3F8
+
+static int mode = 0; // 0 = cliente && 1 = servidor
+
 static int y_player1 = 384;
 static int y_player2 = 384;
 
@@ -182,7 +185,7 @@ void isr0()
         }
     } 
 
-    draw_ball(ball_x, ball_y);
+    draw_ball(ball_x, ball_y);    
 }
 
 void isr1(void)
@@ -242,6 +245,24 @@ void isr1(void)
             button_k = 1;
         }
     }
+
+    if (mode)
+    {
+         usart_write(SERIAL_PORT,0xff);
+         usart_write(SERIAL_PORT,0x00);
+    }
+    
+   
+}
+
+void isr4(void)
+{
+   unsigned char dado = inb(SERIAL_PORT);
+
+   if (dado == 0xFF)
+   {
+         
+   }
 }
 
 int main(void)
@@ -251,7 +272,7 @@ int main(void)
     draw_player1(y_player1);
     draw_player2(y_player2);
 
-    usart_init(0x3f8);
+    usart_init(SERIAL_PORT);
     //usart_puts("abc");
 
     while (1)
