@@ -151,6 +151,17 @@ void isr0()
     {
         if (ball_x >= 20)
         {
+            //toca musica quando bate na raquete do player1
+            for(int j = 0; j < 1E3; j++) //delay
+            {
+                for(int i = 0; i < 7; i++)
+                {
+                    play_sound(tones[4]);
+                }
+            }    
+
+            stop_sound();
+
             if ((ball_y >= y_player1) && (ball_y <= y_player1 + 100))
             {
                 ball_x = 30;
@@ -160,6 +171,17 @@ void isr0()
 
         if (ball_x <= 0)
         {
+            //toca musica
+            for(int j = 0; j < 1E3; j++) //delay
+            {
+                for(int i = 0; i < 7; i++)
+                {
+                    play_sound(tones[i]);
+                }
+            }    
+            
+            stop_sound();
+
             // Ponto para o jogador 1
             points_player2++;
             reiniciaJogo();
@@ -168,6 +190,17 @@ void isr0()
 
     if (ball_x >= 1023 - 30)
     {
+        //toca musica quando bate na raquete do player2
+        for(int j = 0; j < 1E3; j++) //delay
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                play_sound(tones[4]);
+            }
+        }
+
+        stop_sound();
+
         if (ball_x <= 1023 - 20)
         {
             if ((ball_y >= y_player2) && (ball_y <= y_player2 + 100))
@@ -179,6 +212,17 @@ void isr0()
 
         if (ball_x >= 1023)
         {
+            //toca musica
+            for(int j = 0; j < 1E3; j++) //delay
+            {
+                for(int i = 0; i < 7; i++)
+                    {
+                        play_sound(tones[i]);
+                    }
+            }
+            
+            stop_sound();
+
             // Ponto para o jogador 1
             points_player1++;
             reiniciaJogo();
