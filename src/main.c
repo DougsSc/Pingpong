@@ -31,6 +31,8 @@ int musica_idx = 0;
 
 long int tones[] = {523,587,659,698,783,880,987};
 
+static int count_sound = 1E6;
+
 void reiniciaJogo(void)
 {
     ball_x = 512;
@@ -151,6 +153,8 @@ void isr0()
     {
         if (ball_x >= 20)
         {
+            count_sound = 0;
+
             if ((ball_y >= y_player1) && (ball_y <= y_player1 + 100))
             {
                 ball_x = 30;
@@ -160,7 +164,9 @@ void isr0()
 
         if (ball_x <= 0)
         {
-            // Ponto para o jogador 1
+            count_sound = 0;
+
+            // Ponto para o jogador 2
             points_player2++;
             reiniciaJogo();
         }
@@ -168,6 +174,8 @@ void isr0()
 
     if (ball_x >= 1023 - 30)
     {
+        count_sound = 0;
+
         if (ball_x <= 1023 - 20)
         {
             if ((ball_y >= y_player2) && (ball_y <= y_player2 + 100))
@@ -179,6 +187,8 @@ void isr0()
 
         if (ball_x >= 1023)
         {
+            count_sound = 0; //zera contador para acionar o som
+
             // Ponto para o jogador 1
             points_player1++;
             reiniciaJogo();
@@ -277,6 +287,17 @@ int main(void)
 
     while (1)
     {
+
+        if(count_sound < 1E4)
+        {
+            play_sound(tones[4]);
+        }    
+        else
+        {
+            stop_sound();
+        }
+
+        count_sound++;
     }
 
     return 0;
