@@ -6,3 +6,4 @@ iso/boot/*.elf
 *.img
 *.iso
 *.elf
+.idea/
