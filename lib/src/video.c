@@ -33,14 +33,14 @@ void draw_player2(int y)
     draw_square(1004, y, 10, 100, 0xFFFFFF);
 }
 
-void erase_player1(int y)
+void erase_player1()
 {
-    draw_square(20, y, 10, 100, 0x000000);
+    draw_square(20, 0, 10, 768, 0x000000);
 }
 
-void erase_player2(int y)
+void erase_player2()
 {
-    draw_square(1004, y, 10, 100, 0x000000);
+    draw_square(1004, 0, 10, 768, 0x000000);
 }
 
 void erase_ball(int x, int y)
@@ -100,4 +100,3 @@ void draw_img(int x, int y, void *image)
         }
     }
 }
-
